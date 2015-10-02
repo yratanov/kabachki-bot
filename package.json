@@ -4,6 +4,9 @@
   "private": true,
   "author": "yratanov <organium@gmail.com>",
   "description": "A simple helpful robot for your Company",
+  "scripts": {
+    "start": "bin/hubot -a slack"
+  },
   "dependencies": {
     "hubot": "^2.16.0",
     "hubot-diagnostics": "0.0.1",
