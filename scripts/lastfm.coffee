@@ -11,4 +11,4 @@ module.exports = (robot)->
         track = res.random data.playlist
         res.send "Песенка от #{user}: #{track.playlinks[0].url}"
       catch
-        res.send "Нет песенок у #{user}"
+        res.send "Нет песенок у #{user}\nКак жаль..."
