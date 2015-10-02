@@ -4,6 +4,6 @@ module.exports = (robot)->
     .get() (err, httpres, body) ->
       try
         poem = body.match(/<div class="poem__text">(.*?)<\/div>/)[1]
-        res.send "#{poem.replace(/(<[|/]?p>|<br\s*[\/]?>)/gi, '\\n')}"
+        res.send "#{poem.replace(/(<[|/]?p>|<br\s*[\/]?>)/gi, '\n')}"
       catch
         res.send "Болсушок"
