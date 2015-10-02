@@ -3,7 +3,7 @@ module.exports = (robot)->
     users = ['k666r6', 'cryomorph', 'organium', 'varg90']
     user = res.match[2].trim() if res.match[2]
     user ||= res.random users
-    robot.http("http://www.last.fm/player/station/user/#{encodeURIComponent(user)}/mix")
+    robot.http("http://www.last.fm/player/station/user/#{encodeURIComponent(user)}/library")
     .header('Accept', 'application/json')
     .get() (err, httpres, body) ->
       try
