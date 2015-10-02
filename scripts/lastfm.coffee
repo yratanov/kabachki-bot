@@ -1,5 +1,5 @@
 module.exports = (robot)->
-  robot.respond /песенка( для (.+))?/i, (res)->
+  robot.respond /песенка( от (.+))?/i, (res)->
     users = ['k666r6', 'cryomorph', 'organium', 'varg90']
     user = res.match[2].trim() if res.match[2]
     user ||= res.random users
