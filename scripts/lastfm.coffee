@@ -16,13 +16,13 @@ module.exports = (robot)->
     .get() (err, httpres, body) ->
       try
         data = JSON.parse body
-        for i in [1..10]
+        for i in [1..20]
           [artist, track, url] = getSong(res, data.playlist)
           break if url
 
         if url
           res.send "Песенка от *#{user}*: *#{artist} - #{track}*: #{url}"
         else
-          res.send "Нет ссылочки с youtube для *#{artist} - #{track}*"
+          res.send "Нет ссылочки с Youtube"
       catch
         res.send "Нет песенок у *#{user}*\nКак жаль..."
