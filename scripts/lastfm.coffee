@@ -1,3 +1,11 @@
+getSong = (res, playlist) ->
+  track = res.random playlist
+  url = ''
+  track.playlinks.forEach (data)=>
+    url = data.url if data.affiliate is 'youtube'
+  if url
+    [track.artists[0].name, track.name, url]
+
 module.exports = (robot)->
   robot.respond /песенка( от (.+))?/i, (res)->
     users = ['k666r6', 'cryomorph', 'organium', 'varg90']
@@ -8,13 +16,13 @@ module.exports = (robot)->
     .get() (err, httpres, body) ->
       try
         data = JSON.parse body
-        track = res.random data.playlist
-        url = ''
-        track.playlinks.forEach (data)=>
-          url = data.url if data.affiliate is 'youtube'
+        for i in [1..10]
+          [artist, track, url] = getSong(res, data.playlist)
+          break if url
+
         if url
-          res.send "Песенка от *#{user}*: #{url}"
+          res.send "Песенка от *#{user}*: *#{artist} - #{track}*: #{url}"
         else
-          res.send "Нет ссылочки с youtube для *#{track.name}*"
+          res.send "Нет ссылочки с youtube для *#{artist} - #{track}*"
       catch
         res.send "Нет песенок у *#{user}*\nКак жаль..."
