@@ -9,6 +9,12 @@ module.exports = (robot)->
       try
         data = JSON.parse body
         track = res.random data.playlist
-        res.send "Песенка от #{user}: #{track.playlinks[0].url}"
+        url = ''
+        track.playlinks.forEach (data)=>
+          url = data.url if data.affiliate is 'youtube'
+        if url
+          res.send "Песенка от *#{user}*: #{url}"
+        else
+          res.send "Нет ссылочки с youtube для *#{track.name}*"
       catch
-        res.send "Нет песенок у #{user}\nКак жаль..."
+        res.send "Нет песенок у *#{user}*\nКак жаль..."
