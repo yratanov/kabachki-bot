@@ -1,27 +1,13 @@
-answers = [
-  'Конечно!'
-  'Я сомневаюсь'
-  'Это факт'
-  'Смотря как запихать'
-  'Просто сделай это!'
-  '<случайный ответ>'
-  'Попробуй ножом'
-  'Надо подождать'
-  'НЕТ!'
-  'Да!'
-  ':itsok:'
-  'Я бы не стал'
-  'Сделай это!'
-  'Кабачок'
-  'Чтооо?'
-  ':confused:'
-  'Плохо'
-  'Хорошо'
-  'Неважно'
-  'Это отстой'
-  'Да пойдет'
-]
 
 module.exports = (robot)->
   robot.respond /скажи, (.+)\?/i, (res)->
-    res.send res.random(answers)
+    randomExistingWord = res.random res.match[1].split(' ')
+    robot.http("http://randomword.pythonanywhere.com/get/#{res.random([3..10])}/2")
+    .header('Accept', 'application/json')
+    .get() (err, httpres, body) ->
+      try
+        data = JSON.parse body
+        words = data.map (data) ->
+          data.fields.word
+
+        res.send randomExistingWord + ' ' + words.join(' ')
