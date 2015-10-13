@@ -6,12 +6,24 @@ connectors = [
   'на'
   'при этом'
   'так то'
+  'будто'
+  'вместо'
+  'вслед за'
+  'внезано'
+  'станет'
+  'был'
+  'из'
+  'через'
+  'с'
+  'над'
+  'об'
+  'про'
+  'под'
 ]
 
 module.exports = (robot)->
   robot.respond /скажи, (.+)\?/i, (res)->
     randomExistingWord = res.random res.match[1].split(' ')
-    randomConnector = res.random connectors
     robot.http("http://randomword.pythonanywhere.com/get/#{res.random([3..10])}/2")
     .header('Accept', 'application/json')
     .get() (err, httpres, body) ->
