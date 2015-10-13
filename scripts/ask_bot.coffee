@@ -27,12 +27,30 @@ connectors = [
   'сонный'
   'ленивый'
   'глупый'
+  'перламутровый'
+  'сказочный'
+  'жуткий'
+  'амбивалентный'
+  'креативный'
+  'грозный'
+  'косой'
+  'смачный'
+  'березовый'
+  'дубовый'
+  'круглолицый'
+  'паразитарный'
+  'красочный'
+  'милый'
+  'грандиозный'
+  'тойный'
+  'грибной'
+  'кабачковый'
 ]
 
 module.exports = (robot)->
   robot.respond /скажи, (.+)\?/i, (res)->
     randomExistingWord = res.random res.match[1].split(' ')
-    robot.http("http://randomword.pythonanywhere.com/get/#{res.random([3..10])}/2")
+    robot.http("http://randomword.pythonanywhere.com/get/#{res.random([3..10])}/1")
     .header('Accept', 'application/json')
     .get() (err, httpres, body) ->
       try
