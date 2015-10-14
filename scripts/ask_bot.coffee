@@ -4,14 +4,13 @@ connectors = [
   'а то'
   'но'
   'на'
+  'и'
   'при этом'
   'так то'
   'будто'
   'вместо'
   'вслед за'
   'внезапно'
-  'станет'
-  'был'
   'из'
   'через'
   'с'
@@ -19,6 +18,35 @@ connectors = [
   'об'
   'про'
   'под'
+  ''
+]
+
+verbs = [
+  'спал'
+  'копал'
+  'борол'
+  'носил'
+  'косил'
+  'дробил'
+  'зажал'
+  'мочил'
+  'забыл'
+  'попал'
+  'сломал'
+  'достал'
+  'станет'
+  'был'
+  'пошел'
+  'сломил'
+  'сбрил'
+  'отрастил'
+  'поработил'
+  'откромсал'
+  'улетел'
+  ''
+]
+
+adjectives = [
   'красивый'
   'нелепый'
   'знатный'
@@ -46,9 +74,6 @@ connectors = [
   'грибной'
   'кабачковый'
   'странный'
-  'попал'
-  'сломал'
-  'достал'
   'лихой'
   'модный'
   'злобный'
@@ -57,15 +82,7 @@ connectors = [
   'ночной'
   'бородатый'
   'хромой'
-  'спал'
-  'копал'
-  'борол'
-  'носил'
-  'косил'
-  'дробил'
-  'зажал'
-  'мочил'
-  'забыл'
+  ''
 ]
 
 module.exports = (robot)->
@@ -79,4 +96,4 @@ module.exports = (robot)->
         words = data.map (data) ->
           data.fields.word
 
-        res.send "#{randomExistingWord} #{res.random connectors} #{words.join(" #{res.random connectors} ")}"
+        res.send "#{randomExistingWord} #{res.random connectors} #{res.random verbs} #{res.random adjectives} #{words.join(" #{res.random connectors} ")}"
