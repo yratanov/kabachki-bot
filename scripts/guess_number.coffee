@@ -9,7 +9,7 @@ module.exports = (robot)->
       robot.brain.set('guessGameNumber', number)
       res.send 'Игра началась! Чтобы угадывать *уг ЧИСЛО*. Удачи!'
 
-  robot.respond /уг (\d+)/i, (res)->
+  robot.hear /уг (\d+)/i, (res)->
     if robot.brain.get('guessGameStarted')
       number = parseInt(res.match[1])
       myNumber = robot.brain.get('guessGameNumber')
@@ -20,6 +20,4 @@ module.exports = (robot)->
       else
         robot.brain.set('guessGameStarted', 0)
         res.send "#{res.message.user.name} угадал! *#{number}* - правильный ответ!"
-    else
-      res.send 'Игра еще не началась. Напиши *начать угадайку*, чтобы запустить игру.'
 
