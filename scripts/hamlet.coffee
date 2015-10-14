@@ -1,5 +1,5 @@
 module.exports = (robot)->
-  robot.respond /(.+?) (или|or) (.+)/i, (res)->
-    first = res.match[1].trim()
-    second = res.match[3].trim()
-    res.send res.random [first, second]
+  robot.respond /.+? или .+/i, (res)->
+    results = res.message.match(/(.+?)((?= или )|(?=$))/gi).map (el) =>
+      el.replace(' или ', '').replace(robot.name, '').replace('@', '').trim()
+    res.send res.random results
