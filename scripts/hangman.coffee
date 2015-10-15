@@ -45,8 +45,10 @@ module.exports = (robot)->
       if letter.length > 1
         if word == letter
           win(res, robot)
+          return
         else
           fail(res, robot, letter)
+          return
 
 
       if hint.indexOf(letter) != -1
