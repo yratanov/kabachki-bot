@@ -1,4 +1,24 @@
-MAXIMUM_TRIES = 3
+MAXIMUM_TRIES = 5
+
+win = (res, robot) ->
+  word = robot.brain.get('hangmanGameWord')
+  res.send "Вы выиграли! Слово: *#{word}*! :tada:"
+  robot.brain.set('hangmanGameStarted', 0)
+
+fail = (res, robot, letter) ->
+  word = robot.brain.get('hangmanGameWord')
+  tries = robot.brain.get('hangmanGameTries') + 1
+  if tries == MAXIMUM_TRIES
+    res.send "Вы проиграли :disappointed:. Мое слово *#{word}*."
+    robot.brain.set('hangmanGameStarted', 0)
+    return
+  robot.brain.set('hangmanGameTries', tries)
+  triesLeft = MAXIMUM_TRIES - tries
+  ending = if triesLeft == 1
+    'ка'
+  else
+    'ки'
+  res.send "Буквы *#{letter}* нет в моем слове :wink:. Осталось #{MAXIMUM_TRIES - tries} попыт#{ending}."
 
 module.exports = (robot)->
   robot.respond /начать виселицу/i, (res)->
@@ -8,7 +28,7 @@ module.exports = (robot)->
       randomWord = require('./lib/random_word')
       randomWord robot, res, (words)->
         word = words[0]
-        console.log(word)
+        console.log word
         robot.brain.set('hangmanGameStarted', 1)
         robot.brain.set('hangmanGameWord', word)
         robot.brain.set('hangmanGameTries', 0)
@@ -16,14 +36,19 @@ module.exports = (robot)->
         res.send "`#{robot.brain.get('hangmanGameHint').join(' ')}`"
         res.send 'Игра началась! Чтобы угадывать *ви БУКВА*. Удачи!'
 
-  robot.hear /ви ([а-я])/i, (res)->
+  robot.hear /ви ([а-я]+)/i, (res)->
     if robot.brain.get('hangmanGameStarted')
-      letter = res.match[1]
       letter = res.match[1]
       word = robot.brain.get('hangmanGameWord')
       hint = robot.brain.get('hangmanGameHint')
 
-      console.log word
+      if letter.length > 1
+        if word == letter
+          win(res, robot)
+        else
+          fail(res, robot, letter)
+
+
       if hint.indexOf(letter) != -1
         res.send "Эта буква уже использована!"
         return
@@ -35,22 +60,10 @@ module.exports = (robot)->
           index = word.indexOf(letter, index + 1)
 
         if hint.indexOf('_') == -1
-          res.send "Вы выиграли! Слово: *#{word}*! :tada:"
-          robot.brain.set('hangmanGameStarted', 0)
+          win(res, robot)
         else
           robot.brain.set('hangmanGameHint', hint)
+          res.send "`#{hint.join(' ')}`"
       else
-        tries = robot.brain.get('hangmanGameTries') + 1
-        if tries == MAXIMUM_TRIES
-          res.send "Вы проиграли :disappointed:. Мое слово *#{word}*."
-          robot.brain.set('hangmanGameStarted', 0)
-          return
-        robot.brain.set('hangmanGameTries', tries)
-        triesLeft = MAXIMUM_TRIES - tries
-        ending = if triesLeft == 1
-          'ка'
-        else
-          'ки'
-        res.send "Буквы *#{letter}* нет в моем слове :wink:. Осталось #{MAXIMUM_TRIES - tries} попыт#{ending}."
-
-      res.send "`#{hint.join(' ')}`"
+        fail(res, robot, letter)
+        res.send "`#{hint.join(' ')}`"
