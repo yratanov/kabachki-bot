@@ -96,4 +96,4 @@ module.exports = (robot)->
         words = data.map (data) ->
           data.fields.word
 
-        res.send "#{randomExistingWord} #{res.random connectors} #{res.random verbs} #{res.random adjectives} #{words.join(" #{res.random connectors} ")}"
+        res.send "#{randomExistingWord} #{res.random verbs} #{res.random adjectives} #{words.join(" #{res.random connectors} ")}"
