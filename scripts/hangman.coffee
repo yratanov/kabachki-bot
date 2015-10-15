@@ -1,4 +1,4 @@
-MAXIMUM_TRIES = 5
+MAXIMUM_TRIES = 9
 
 win = (res, robot) ->
   word = robot.brain.get('hangmanGameWord')
