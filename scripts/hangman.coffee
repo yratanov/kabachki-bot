@@ -13,7 +13,7 @@ module.exports = (robot)->
         robot.brain.set('hangmanGameWord', word)
         robot.brain.set('hangmanGameTries', 0)
         robot.brain.set('hangmanGameHint', word.split('').map -> '_')
-        res.send robot.brain.get('hangmanGameHint').join(' ')
+        res.send "`#{robot.brain.get('hangmanGameHint').join(' ')}`"
         res.send 'Игра началась! Чтобы угадывать *ви БУКВА*. Удачи!'
 
   robot.hear /ви ([а-я])/i, (res)->
@@ -53,4 +53,4 @@ module.exports = (robot)->
           'ки'
         res.send "Буквы *#{letter}* нет в моем слове :wink:. Осталось #{MAXIMUM_TRIES - tries} попыт#{ending}."
 
-      res.send hint.join(' ')
+      res.send "`#{hint.join(' ')}`"
