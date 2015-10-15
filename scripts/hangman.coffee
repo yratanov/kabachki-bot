@@ -31,6 +31,7 @@ module.exports = (robot)->
         console.log word
         robot.brain.set('hangmanGameStarted', 1)
         robot.brain.set('hangmanGameWord', word)
+        robot.brain.set('hangmanGameUsedLetters', [])
         robot.brain.set('hangmanGameTries', 0)
         robot.brain.set('hangmanGameHint', word.split('').map -> '_')
         res.send "`#{robot.brain.get('hangmanGameHint').join(' ')}`"
@@ -41,6 +42,7 @@ module.exports = (robot)->
       letter = res.match[1]
       word = robot.brain.get('hangmanGameWord')
       hint = robot.brain.get('hangmanGameHint')
+      usedLetters = robot.brain.get('hangmanGameUsedLetters')
 
       if letter.length > 1
         if word == letter
@@ -50,10 +52,12 @@ module.exports = (robot)->
           fail(res, robot, letter)
           return
 
-
-      if hint.indexOf(letter) != -1
+      if usedLetters.indexOf(letter) != -1
         res.send "Эта буква уже использована!"
         return
+
+      usedLetters.push(letter)
+      robot.brain.set('hangmanGameUsedLetters', usedLetters)
 
       if word.indexOf(letter) != -1
         index = word.indexOf(letter)
