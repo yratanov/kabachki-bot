@@ -1,0 +1,12 @@
+version: '2'
+services:
+  web:
+    build:
+      context: .
+    ports:
+     - "3000:3000"
+    volumes:
+     - .:/usr/api
+    command: npm start
+    environment:
+        HUBOT_SLACK_TOKEN: test
