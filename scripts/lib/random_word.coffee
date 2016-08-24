@@ -1,7 +1,7 @@
 fs = require('fs')
 readline = require('readline')
 
-linesInFile = 186400
+linesInFile = 34000
 
 module.exports = (robot, res, callback, wordsCount = 1) ->
   counter = 0
