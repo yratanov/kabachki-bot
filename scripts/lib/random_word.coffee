@@ -1,9 +1,23 @@
-module.exports = (robot, res, callback, wordSize, wordsCount = 1) ->
-  wordSize ||= res.random([4..10])
-  robot.http("http://randomword.pythonanywhere.com/get/#{wordSize}/#{wordsCount}")
-  .header('Accept', 'application/json')
-  .get() (err, httpres, body) ->
-    data = JSON.parse body
-    words = data.map (data) ->
-      data.fields.word
-    callback words
+fs = require('fs')
+readline = require('readline')
+
+linesInFile = 186400
+
+module.exports = (robot, res, callback, wordsCount = 1) ->
+  counter = 0
+  indexes = [1..wordsCount].map =>
+    parseInt(Math.random() * linesInFile, 10)
+  words = []
+  rl = readline.createInterface(
+    input: fs.createReadStream('fixtures/words')
+    terminal: false
+  )
+  done = false
+  rl.on 'line', (line) ->
+    counter += 1
+    if indexes.indexOf(counter) != -1
+      words.push line
+    if words.length == wordsCount && !done
+      done = true
+      callback words
+      rl.close()
