@@ -1,93 +1,20 @@
-connectors = [
-  'в'
-  'за'
-  'а то'
-  'но'
-  'на'
-  'и'
-  'при этом'
-  'так то'
-  'будто'
-  'вместо'
-  'вслед за'
-  'внезапно'
-  'из'
-  'через'
-  'с'
-  'над'
-  'об'
-  'про'
-  'под'
-  ''
-]
-
-verbs = [
-  'спал'
-  'копал'
-  'борол'
-  'носил'
-  'косил'
-  'дробил'
-  'зажал'
-  'мочил'
-  'забыл'
-  'попал'
-  'сломал'
-  'достал'
-  'станет'
-  'был'
-  'пошел'
-  'сломил'
-  'сбрил'
-  'отрастил'
-  'поработил'
-  'откромсал'
-  'улетел'
-  ''
-]
-
-adjectives = [
-  'красивый'
-  'нелепый'
-  'знатный'
-  'матерый'
-  'убогий'
-  'сонный'
-  'ленивый'
-  'глупый'
-  'перламутровый'
-  'сказочный'
-  'жуткий'
-  'амбивалентный'
-  'креативный'
-  'грозный'
-  'косой'
-  'смачный'
-  'березовый'
-  'дубовый'
-  'круглолицый'
-  'паразитарный'
-  'красочный'
-  'милый'
-  'грандиозный'
-  'тойный'
-  'грибной'
-  'кабачковый'
-  'странный'
-  'лихой'
-  'модный'
-  'злобный'
-  'кариозный'
-  'простудный'
-  'ночной'
-  'бородатый'
-  'хромой'
-  ''
-]
+getRandom = (res, type, words) =>
+  randomWord = require('./lib/random_word')
+  randomWord res, (word)=>
+    words[type] = word
+    console.log words
+    if words.adjective && words.noun && words.verb
+      res.send "#{words.randomExistingWord} #{words.verb} #{words.adjective} #{words.noun}"
+  , type
 
 module.exports = (robot)->
-  robot.respond /скажи, (.+)\?/i, (res)->
-    randomExistingWord = res.random res.match[1].split(' ')
-    randomWord = require('./lib/random_word')
-    randomWord robot, res, (words)->
-      res.send "#{randomExistingWord} #{res.random verbs} #{res.random adjectives} #{words.join(" #{res.random connectors} ")}"
+  robot.respond /скажи(,)? (.+)\?/i, (res)->
+    words =
+      randomExistingWord: res.random res.match[2].split(' ')
+      adjective: ''
+      noun: ''
+      verb: ''
+    getRandom(res, 'noun', words)
+    getRandom(res, 'verb', words)
+    getRandom(res, 'adjective', words)
+

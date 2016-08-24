@@ -26,7 +26,7 @@ module.exports = (robot)->
       res.send 'Игра уже идет'
     else
       randomWord = require('./lib/random_word')
-      randomWord robot, res, (words)->
+      randomWord res, (words)->
         word = words[0]
         console.log word
         robot.brain.set('hangmanGameStarted', 1)

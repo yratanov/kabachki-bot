@@ -1,15 +1,18 @@
 fs = require('fs')
 readline = require('readline')
 
-linesInFile = 34000
+linesInFile = 
+  noun: 34000
+  adjective: 6463
+  verb: 9420
 
-module.exports = (robot, res, callback, wordsCount = 1) ->
+module.exports = (res, callback, partOfSpeech = 'noun', wordsCount = 1) ->
   counter = 0
   indexes = [1..wordsCount].map =>
-    parseInt(Math.random() * linesInFile, 10)
+    parseInt(Math.random() * linesInFile[partOfSpeech], 10)
   words = []
   rl = readline.createInterface(
-    input: fs.createReadStream('fixtures/words')
+    input: fs.createReadStream("fixtures/#{partOfSpeech}")
     terminal: false
   )
   done = false
