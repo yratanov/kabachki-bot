@@ -5,7 +5,7 @@
   "author": "yratanov <organium@gmail.com>",
   "description": "A simple helpful robot for your Company",
   "scripts": {
-    "start": "PORT=8080 HUBOT_SLACK_TOKEN=$HUBOT_SLACK_TOKEN HEROKU_URL=$HUBOT_URL REDIS_URL=redis://:$REDIS_PASS@$REDIS_URL:$REDIS_PORT bin/hubot -a slack"
+    "start": "PORT=8080 HUBOT_SLACK_TOKEN=$HUBOT_SLACK_TOKEN REDIS_URL=redis://:$REDIS_PASS@$REDIS_URL:$REDIS_PORT bin/hubot -a slack"
   },
   "main": "bin/hubot",
   "dependencies": {
@@ -15,7 +15,6 @@
     "hubot-google-images": "^0.2.2",
     "hubot-google-translate": "^0.2.0",
     "hubot-help": "^0.1.1",
-    "hubot-heroku-keepalive": "^1.0.0",
     "hubot-maps": "0.0.2",
     "hubot-pugme": "^0.1.0",
     "hubot-reaction": "0.0.6",
