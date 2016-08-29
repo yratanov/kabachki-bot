@@ -1,10 +1,11 @@
 fs = require('fs')
 readline = require('readline')
 
-linesInFile = 
+linesInFile =
   noun: 34000
   adjective: 6463
   verb: 9420
+  anagrams: 6259
 
 module.exports = (res, callback, partOfSpeech = 'noun', wordsCount = 1) ->
   counter = 0
