@@ -5,7 +5,7 @@
   "author": "yratanov <organium@gmail.com>",
   "description": "A simple helpful robot for your Company",
   "scripts": {
-    "start": "PORT=8080 HUBOT_SLACK_TOKEN=$HUBOT_SLACK_TOKEN REDIS_URL=redis://:$REDIS_PASS@$REDIS_URL:$REDIS_PORT bin/hubot -a slack"
+    "start": "PORT=8080 TELEGRAM_TOKEN=$TELEGRAM_TOKEN HUBOT_SLACK_TOKEN=$HUBOT_SLACK_TOKEN REDIS_URL=redis://:$REDIS_PASS@$REDIS_URL:$REDIS_PORT bin/hubot -a slack"
   },
   "main": "bin/hubot",
   "dependencies": {
