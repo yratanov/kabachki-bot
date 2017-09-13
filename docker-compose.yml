@@ -10,3 +10,4 @@ services:
     command: npm start
     environment:
         HUBOT_SLACK_TOKEN: test
+        TELEGRAM_TOKEN: TELEGRAM_TOKEN
