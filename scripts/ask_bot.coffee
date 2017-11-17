@@ -52,3 +52,14 @@ module.exports = (robot)->
       res.send "потому что #{word}"
     , 'verb'
 
+  robot.respond /зачем (.+)\?/i, (res)->
+    words = {}
+    getRandomWhy = (res, type, words) =>
+      randomWord res, (word)=>
+        words[type] = word
+        if words.noun && words.verb
+          res.send "чтобы #{words.noun} не #{words.verb}"
+      , type
+    getRandomWhy(res, 'noun', words)
+    getRandomWhy(res, 'verb', words)
+
