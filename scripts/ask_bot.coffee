@@ -31,3 +31,11 @@ module.exports = (robot)->
       res.send "#{number} #{word}"
     , 'noun'
 
+
+module.exports = (robot)->
+  robot.respond /почему (.+)\?/i, (res)->
+    randomWord = require('./lib/random_word')
+    randomWord res, (word)=>
+      res.send "потому что #{word}"
+    , 'verb'
+
