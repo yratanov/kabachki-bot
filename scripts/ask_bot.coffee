@@ -21,16 +21,15 @@ module.exports = (robot)->
   robot.respond /сколько (.+)\?/i, (res)->
     randomWord = require('./lib/random_word')
     number = if Math.random() * 2 > 1
-              res.random('двадцать тридцать сорок пятьдесят шестьдесят семьдесят восемдесят девяносто сто'.split(' '))
+      res.random('двадцать тридцать сорок пятьдесят шестьдесят семьдесят восемдесят девяносто сто'.split(' '))
 
     if number
-      number += ' ' +  res.random('один два три четыре пять шесть семь восемь девять'.split(' '))
+      number += ' ' + res.random('один два три четыре пять шесть семь восемь девять'.split(' '))
     else
       number = res.random('десять одиннадцать двенадцать триндцать четырнадцать пятнадцать шестнадцать семнадцать восемнадцать девятнадцать'.split(' '))
     randomWord res, (word)=>
       res.send "#{number} #{word}"
     , 'noun'
-
 
 module.exports = (robot)->
   robot.respond /почему (.+)\?/i, (res)->
@@ -38,4 +37,16 @@ module.exports = (robot)->
     randomWord res, (word)=>
       res.send "потому что #{word}"
     , 'verb'
+
+
+module.exports = (robot)->
+  robot.respond /как(ой|ая) (.+)\?/i, (res)->
+    randomWord = require('./lib/random_word')
+    randomWord res, (word)=>
+      itIs = if res.match[1] == 'ой'
+        'он такой... '
+      else
+        'она такая...'
+      res.send "#{itIs} #{word}"
+    , 'adjective'
 
