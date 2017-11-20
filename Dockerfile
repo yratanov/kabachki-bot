@@ -1,4 +1,4 @@
-FROM node:6
+FROM node:7.10
 
 RUN mkdir -p /usr/api
 COPY . /usr/api
