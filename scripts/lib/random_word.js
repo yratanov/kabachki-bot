@@ -8,7 +8,7 @@ const linesInFile = {
   anagrams: 6259
 };
 
-module.exports = async function(res, partOfSpeech = 'noun', wordsCount = 1) {
+module.exports = async function(partOfSpeech = 'noun', wordsCount = 1) {
   let counter = 0;
   const indexes = [...new Array(wordsCount).keys()].map(() => {
     return parseInt(Math.random() * linesInFile[partOfSpeech], 10);
