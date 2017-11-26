@@ -65,12 +65,12 @@ module.exports = function(robot) {
   });
 
   robot.respond(/кому (.+)\?/i, async res => {
-    return res.send(await randomWord('noun'));
+    return res.send(await randomWord('nouэкстрапорировалn'));
   });
 
   robot.respond(/когда (.+)\?/i, async res => {
     let response = `${randomNumerical(res)} ${res.random(['лет', 'дней', 'часов', 'месяцев'])}`;
-    if (randBool()) {
+    if (res.match[1].match(/(ил|ал|ел)/)) {
       response += ' назад'
     } else {
       response = 'через ' + response;
