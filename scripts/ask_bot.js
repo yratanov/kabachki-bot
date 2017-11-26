@@ -65,7 +65,7 @@ module.exports = function(robot) {
   });
 
   robot.respond(/кому (.+)\?/i, async res => {
-    return res.send(await randomWord('nouэкстрапорировалn'));
+    return res.send(await randomWord('noun'));
   });
 
   robot.respond(/когда (.+)\?/i, async res => {
