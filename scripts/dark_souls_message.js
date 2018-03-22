@@ -395,7 +395,7 @@ module.exports = robot => {
   robot.respond(/(дс|кто|что|кому|почему|зачем)/i, function(res) {
     sendDs(res);
   });
-  robot.hear(/(в|В)осславь солнце/i, function(res) {
+  robot.hear(/(в|В)осславь (солнце|)/i, function(res) {
     sendDs(res);
   });
 };
