@@ -380,13 +380,22 @@ const CATEGORIES = [
   ]
 ];
 
-module.exports = robot =>
+function sendDs(res) {
+
+  let phrase = res.random(TEMPLATES).replace('****', res.random(res.random(CATEGORIES)));
+
+  if (Math.random() > 0.5) {
+    phrase += ' ' + res.random(CONJUNCTIONS) + ' ' + res.random(TEMPLATES).replace('****', res.random(res.random(CATEGORIES)));
+  }
+
+  res.send(phrase);
+}
+
+module.exports = robot => {
   robot.respond(/(дс|кто|что|кому|почему|зачем)/i, function(res) {
-    let phrase = res.random(TEMPLATES).replace('****', res.random(res.random(CATEGORIES)));
-
-    if (Math.random() > 0.5) {
-      phrase += ' ' + res.random(CONJUNCTIONS) + ' ' + res.random(TEMPLATES).replace('****', res.random(res.random(CATEGORIES)));
-    }
-
-    res.send(phrase);
+    sendDs(res);
   });
+  robot.hear(/(в|В)осславь солнце/i, function(res) {
+    sendDs(res);
+  });
+};
