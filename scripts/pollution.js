@@ -16,6 +16,9 @@ module.exports = robot =>
       { title: 'базаиха', id: '25', },
     ];
     let data = res.match[1];
+    if (!data) {
+      return res.send(points.map(p => p.title).join("\n"));
+    }
     point = points.find((p) => p.id === data || p.title === data.toLowerCase());
     if (point) {
       res.send(url + point.id);
