@@ -381,7 +381,6 @@ const CATEGORIES = [
 ];
 
 function sendDs(res) {
-
   let phrase = res.random(TEMPLATES).replace('****', res.random(res.random(CATEGORIES)));
 
   if (Math.random() > 0.5) {
@@ -395,7 +394,7 @@ module.exports = robot => {
   robot.respond(/(дс|кто|что|кому|почему|зачем)/i, function(res) {
     sendDs(res);
   });
-  robot.hear(/(в|В)осславь (солнце|)/i, function(res) {
+  robot.hear(/((в|В)осславь (солнце|)|ds|dark souls|bloodborne|соус)/i, function(res) {
     sendDs(res);
   });
 };
