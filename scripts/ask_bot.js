@@ -45,29 +45,6 @@ module.exports = function(robot) {
     return res.send(`с ${word}`);
   });
 
-  robot.respond(/почему (.+)\?/i, async res => {
-    let word = await randomWord('verb');
-    return res.send(`потому что ${word}`);
-  });
-
-  robot.respond(/зачем (.+)\?/i, async res => {
-    let noun = await randomWord('noun');
-    let verb = await randomWord('verb');
-    return res.send(`чтобы ${noun} не ${verb}`);
-  });
-
-  robot.respond(/кто (.+)\?/i, async res => {
-    return res.send(await randomWord('noun'));
-  });
-
-  robot.respond(/что (.+)\?/i, async res => {
-    return res.send(`${await randomWord('adjective')} ${await randomWord('noun')}`);
-  });
-
-  robot.respond(/кому (.+)\?/i, async res => {
-    return res.send(await randomWord('noun'));
-  });
-
   robot.respond(/когда (.+)\?/i, async res => {
     let response = `${randomNumerical(res)} ${res.random(['лет', 'дней', 'часов', 'месяцев'])}`;
     if (res.match[1].match(/(ил|ал|ел)/)) {

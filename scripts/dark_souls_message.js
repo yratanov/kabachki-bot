@@ -381,7 +381,7 @@ const CATEGORIES = [
 ];
 
 module.exports = robot =>
-  robot.respond(/дс/i, function(res) {
+  robot.respond(/(дс|кто|что|кому|почему|зачем)/i, function(res) {
     let phrase = res.random(TEMPLATES).replace('****', res.random(res.random(CATEGORIES)));
 
     if (Math.random() > 0.5) {
