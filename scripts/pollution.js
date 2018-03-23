@@ -1,4 +1,24 @@
-module.exports = robot =>
+const fs = require('fs');
+const http = require('http');
+
+module.exports = robot => {
+  function sendPhoto(chatId, photoUrl) {
+    let tempFileName = '/tmp/tempImage.png';
+    http.get(photoUrl, (response) => {
+      response.pipe(fs.createWriteStream(tempFileName))
+        .on('finish', () => {
+          robot.emit('telegram:invoke', 'sendPhoto', {
+            chat_id: chatId,
+            photo: fs.createReadStream(tempFileName)
+          }, function(error) {
+            console.log(error);
+            fs.unlink(tempFileName, console.log)
+          });
+
+        })
+    })
+  }
+
   robot.respond(/небо ?(.+)?/i, function(res) {
     let url = 'http://krasnoyarsknebo.ru/share/';
     let point;
@@ -21,8 +41,9 @@ module.exports = robot =>
     }
     point = points.find((p) => p.id === data || p.title === data.toLowerCase());
     if (point) {
-      res.send(url + point.id);
+      sendPhoto(res.message.room, url + point.id);
     } else {
       res.send('Точка не найдена с данными ' + data)
     }
   });
+};
