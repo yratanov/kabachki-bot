@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const TEMPLATES = [
   'впереди ****',
   'впереди отсутствует ****',
@@ -380,21 +382,39 @@ const CATEGORIES = [
   ]
 ];
 
-function sendDs(res) {
+function dsMessage(res) {
   let phrase = res.random(TEMPLATES).replace('****', res.random(res.random(CATEGORIES)));
 
   if (Math.random() > 0.5) {
-    phrase += ' ' + res.random(CONJUNCTIONS) + ' ' + res.random(TEMPLATES).replace('****', res.random(res.random(CATEGORIES)));
+    phrase += "\n" + res.random(CONJUNCTIONS) + ' ' + res.random(TEMPLATES).replace('****', res.random(res.random(CATEGORIES)));
   }
 
-  res.send(phrase);
+  return phrase;
+}
+
+const ie = require('image-editor');
+
+function sendPhoto(text, robot, chatId) {
+  let tempFileName = '/tmp/ds.png';
+  ie.readFile('./images/plague.png')
+    .then(buffer => ie.write(buffer, text, 10, -30, 'North'))
+    .then(buffer => ie.writeFile(buffer, tempFileName))
+    .then(() => {
+      robot.emit('telegram:invoke', 'sendPhoto', {
+        chat_id: chatId,
+        photo: fs.createReadStream(tempFileName)
+      }, function(error) {
+        console.log(error);
+        fs.unlink(tempFileName, console.log)
+      });
+    }).catch(console.log);
 }
 
 module.exports = robot => {
   robot.respond(/(дс|кто|что|кому|почему|зачем)/i, function(res) {
-    sendDs(res);
+    res.send(dsMessage(res));
   });
-  robot.hear(/((в|В)осславь (солнце|)|ds|dark souls|bloodborne|соус)/i, function(res) {
-    sendDs(res);
+  robot.hear(/((в|В)осславь|ds|dark souls|bloodborne|соус)/i, function(res) {
+    sendPhoto(dsMessage(res), robot, res.message.room);
   });
 };

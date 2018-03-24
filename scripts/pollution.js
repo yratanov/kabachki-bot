@@ -10,7 +10,7 @@ module.exports = robot => {
           robot.emit('telegram:invoke', 'sendPhoto', {
             chat_id: chatId,
             photo: fs.createReadStream(tempFileName)
-          }, function(error) {
+          }, function(error, response) {
             console.log(error);
             fs.unlink(tempFileName, console.log)
           });
