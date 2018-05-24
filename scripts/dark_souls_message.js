@@ -414,7 +414,7 @@ module.exports = robot => {
   robot.respond(/(дс|кто|что|кому|почему|зачем)/i, function(res) {
     res.send(dsMessage(res));
   });
-  robot.hear(/((в|В)осславь|ds|dark souls|bloodborne|соус)/i, function(res) {
+  robot.hear(/((в|В)осславь|dark souls|bloodborne|соус)/i, function(res) {
     sendPhoto(dsMessage(res), robot, res.message.room);
   });
 };
